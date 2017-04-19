@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?android:attr/selectableItemBackgroundBorderless"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:paddingBottom="16dp"
+    android:paddingTop="16dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="欧洲新能源汽车领域，混动车已经成为主力增长车型。"
+            android:textColor="@color/color21"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:id="@+id/ll_thumbnails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/thumbnail1"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:scaleType="fitXY"
+                android:src="@drawable/thumbnail_error" />
+
+            <ImageView
+                android:id="@+id/thumbnail2"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_weight="1"
+                android:scaleType="fitXY"
+                android:src="@drawable/thumbnail_error" />
+
+            <ImageView
+                android:id="@+id/thumbnail3"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:scaleType="fitXY"
+                android:src="@drawable/thumbnail_error" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="5分钟前"
+            android:textColor="@color/color999"
+            android:textSize="11sp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/thumbnail0"
+        android:layout_width="91dp"
+        android:layout_height="64dp"
+        android:layout_marginLeft="10dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/thumbnail_error"
+        android:visibility="gone" />
+
+</LinearLayout>

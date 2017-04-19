@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">优车会</string>
+    <string name="information">个人资料</string>
+    <string name="feedback">意见反馈</string>
+    <string name="update">检查更新</string>
+    <string name="about">关于我们</string>
+    <string name="exit">退出</string>
+</resources>
