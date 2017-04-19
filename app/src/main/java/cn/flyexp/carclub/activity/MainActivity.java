@@ -1,8 +1,8 @@
 package cn.flyexp.carclub.activity;
 
-import android.os.Bundle;
+import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -11,15 +11,19 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.flyexp.carclub.R;
+import cn.flyexp.carclub.activity.iview.IMainView;
 import cn.flyexp.carclub.adapter.MainAdapter;
 import cn.flyexp.carclub.assistview.DividerItemDecoration;
+import cn.flyexp.carclub.base.BaseActivity;
+import cn.flyexp.carclub.presenter.MainPresenter;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, MainAdapter.IOnItemClickListener {
+public class MainActivity extends BaseActivity<IMainView, MainPresenter> implements IMainView ,View.OnClickListener, MainAdapter.IOnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -33,28 +37,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     CircleImageView userIcon;
     @BindView(R.id.version)
     TextView version;
+    @BindView(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     //适配器
     private MainAdapter mainAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-        initView();
+    protected MainPresenter initPresenter() {
+        return new MainPresenter();
     }
 
-    /**
-     * 初始化
-     */
-    private void initView() {
+    @Override
+    protected int setLayoutId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void initView() {
         //toolbar设置初始标题
         toolbar.setTitle(getResources().getString(R.string.app_name));
         //设置导航icon
         toolbar.setNavigationIcon(R.drawable.ic_menu);
         //以上属性必须在setSupportActionBar(toolbar)之前调用
         setSupportActionBar(toolbar);
+
+        //配置SwipeRefreshLayout
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
 
         //RecyclerView属性
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -64,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.setAdapter(mainAdapter);
 
         toolbar.setNavigationOnClickListener(this);//监听导航icon点击事件
+        swipeRefreshLayout.setOnRefreshListener(this);//监听下拉刷新
         mainAdapter.setOnItemClickListener(this);//列表item点击事件
     }
 
@@ -74,10 +84,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @OnClick({R.id.user_name, R.id.user_icon, R.id.information, R.id.feedback, R.id.update, R.id.about, R.id.exit})
     public void onViewClicked(View view) {
+        Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.user_name:
             case R.id.user_icon:
-
+                intent.setClass(this, LoginActivity.class);
+                startActivity(intent);
                 break;
             case R.id.information:
                 Toast.makeText(this, getResources().getString(R.string.information), Toast.LENGTH_SHORT).show();
@@ -95,6 +107,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 System.exit(0);
                 break;
         }
+    }
+
+    /**
+     * 下拉刷新
+     */
+    @Override
+    public void onRefresh() {
+        presenter.loadData();
+    }
+
+    @Override
+    public void showLoading() {
+        swipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void showEmpty() {
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void showError() {
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void showComplete(ArrayList<?> models) {
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Toast.makeText(this, "" + position, Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -129,8 +174,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * 重写SlideBack方法
+     * 返回false表示不支持滑动返回
+     */
     @Override
-    public void onItemClick(int position) {
-        Toast.makeText(this, "" + position, Toast.LENGTH_SHORT).show();
+    public boolean supportSlideBack() {
+        return false;
     }
+
 }
