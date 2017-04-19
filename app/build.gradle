@@ -21,6 +21,9 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    //圆角imageview
+    //SwipeBackLayout:https://github.com/XBeats/and_swipeback
+    //MaterialEditText:https://github.com/rengwuxian/MaterialEditText
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
     compile 'com.android.support:design:25.3.1'
@@ -29,10 +32,9 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
     compile 'com.squareup.retrofit2:converter-gson:2.2.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.2.0'
-    //圆角imageview
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.jakewharton:butterknife:8.5.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-    //SwipeBackLayout:https://github.com/XBeats/and_swipeback
     compile 'com.aitangba:swipeback:1.0.2'
+    compile 'com.rengwuxian.materialedittext:library:2.1.4'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
 }

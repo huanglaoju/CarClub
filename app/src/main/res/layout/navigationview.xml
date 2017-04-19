@@ -114,7 +114,7 @@
             android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:paddingLeft="16dp"
-            android:text="@string/about"
+            android:text="@string/about_us"
             android:textColor="@color/color21"
             android:textSize="13sp" />
 

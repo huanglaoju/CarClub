@@ -23,7 +23,7 @@ import cn.flyexp.carclub.base.BaseActivity;
 import cn.flyexp.carclub.presenter.MainPresenter;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends BaseActivity<IMainView, MainPresenter> implements IMainView ,View.OnClickListener, MainAdapter.IOnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class MainActivity extends BaseActivity<IMainView, MainPresenter> implements IMainView, View.OnClickListener, MainAdapter.IOnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -101,12 +101,14 @@ public class MainActivity extends BaseActivity<IMainView, MainPresenter> impleme
                 Toast.makeText(this, getResources().getString(R.string.update), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.about:
-                Toast.makeText(this, getResources().getString(R.string.about), Toast.LENGTH_SHORT).show();
+                intent.setClass(this, AboutActivity.class);
+                startActivity(intent);
                 break;
             case R.id.exit:
                 System.exit(0);
                 break;
         }
+        drawerLayout.closeDrawers();
     }
 
     /**
